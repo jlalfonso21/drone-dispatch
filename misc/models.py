@@ -42,10 +42,27 @@ class Drone(models.Model):
 
 
 class Medication(models.Model):
-    name = models.CharField(max_length=255)
-    weight = models.FloatField()
-    code = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='images/medications')
+    name = models.CharField(max_length=255,
+                            validators=(
+                                RegexValidator(
+                                    regex="^[a-zA-Z0-9]([a-zA-Z0-9_-])+$",
+                                    message='Enter a valid value. '
+                                            'Allowed only letters, underscores, dashes and numbers.'
+                                ),
+                            ))
+
+    weight = models.FloatField(validators=[MinValueValidator(0), ], help_text="Weight in grams (g).")
+
+    code = models.CharField(max_length=255,
+                            validators=(
+                                RegexValidator(
+                                    regex="^[A-Z0-9]([A-Z0-9_])+$",
+                                    message='Enter a valid value. '
+                                            'Allowed only upper case letters, underscores and numbers.'
+                                ),
+                            ))
+
+    image = models.ImageField(upload_to='images/medications', null=True, blank=True)
 
     def __str__(self):
         return self.name
