@@ -19,7 +19,7 @@ DRONE_STATES = (
 
 
 class Drone(models.Model):
-    serial_number = models.CharField(max_length=100,
+    serial_number = models.CharField(max_length=100, unique=True,
                                      validators=(
                                          RegexValidator(
                                              regex="^[a-zA-Z0-9]([a-zA-Z0-9_-])+$",
@@ -60,7 +60,7 @@ class Medication(models.Model):
                                     message='Enter a valid value. '
                                             'Allowed only upper case letters, underscores and numbers.'
                                 ),
-                            ))
+                            ), unique=True)
 
     image = models.ImageField(upload_to='images/medications', null=True, blank=True)
 
