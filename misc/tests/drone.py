@@ -6,7 +6,7 @@ from misc.models import Drone
 
 class DroneModelTests(TestCase):
     def test_failed_serial_number_field_drone_model_creation(self):
-        obj = Drone(
+        obj = Drone.objects.create(
             serial_number="#invalid",
             weight_limit=400,
             battery_capacity=100,
@@ -19,7 +19,7 @@ class DroneModelTests(TestCase):
             self.fail("invalid serial number failed")
 
     def test_pass_serial_number_field_drone_model_creation(self):
-        obj = Drone(
+        obj = Drone.objects.create(
             serial_number="VALIDserial_number_cr34ti0n",
             weight_limit=400,
             battery_capacity=100,
@@ -45,7 +45,7 @@ class DroneModelTests(TestCase):
             self.fail("invalid weight limit failed")
 
     def test_pass_weight_limit_field_drone_model_creation(self):
-        obj = Drone(
+        obj = Drone.objects.create(
             serial_number="valid_serial_123",
             weight_limit=400,
             battery_capacity=100,
@@ -71,7 +71,7 @@ class DroneModelTests(TestCase):
             self.fail("invalid battery capacity failed")
 
     def test_pass_battery_capacity_field_drone_model_creation(self):
-        obj = Drone(
+        obj = Drone.objects.create(
             serial_number="valid_serial_123",
             weight_limit=400,
             battery_capacity=100,
