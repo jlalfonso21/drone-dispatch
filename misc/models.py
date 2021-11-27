@@ -42,6 +42,32 @@ class Drone(models.Model):
     def __str__(self):
         return self.serial_number
 
+    def set_idle_state(self):
+        self.state = "IDLE"
+        self.save()
+
+    def set_loading_state(self):
+        if self.state == "IDLE":
+            self.state = "LOADING"
+            self.save()
+
+    def set_loaded_state(self):
+        if self.state == "LOADING":
+            self.state = "LOADED"
+            self.save()
+
+    def set_delivering_state(self):
+        self.state = "DELIVERING"
+        self.save()
+
+    def set_delivered_state(self):
+        self.state = "DELIVERED"
+        self.save()
+
+    def set_returning_state(self):
+        self.state = "RETURNING"
+        self.save()
+
     def add_med(self, med, qty):
         if not self.cargo:
             cargo = Cargo.objects.create(drone=self)
