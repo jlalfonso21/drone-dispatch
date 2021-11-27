@@ -7,3 +7,8 @@ class MedicationBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medication
         fields = ("name", "weight", "code", "image",)
+
+
+class MedicationLoadSerializer(serializers.Serializer):
+    code = serializers.CharField(required=True)
+    qty = serializers.IntegerField(default=0)

@@ -68,6 +68,13 @@ class Drone(models.Model):
         self.state = "RETURNING"
         self.save()
 
+    def get_or_create_cargo(self):
+        try:
+            cargo = self.cargo
+        except:
+            cargo = Cargo.objects.create(drone=self)
+        return cargo
+
     def add_med(self, med, qty):
         if not self.cargo:
             cargo = Cargo.objects.create(drone=self)
@@ -126,12 +133,19 @@ class Cargo(models.Model):
     drone = models.OneToOneField(to="misc.Drone", related_name="cargo", on_delete=models.SET_NULL, null=True)
 
     def get_total_weight(self):
-        return sum([i.weight for i in self.items.all()])
+        return sum([i.weight() for i in self.items.all()])
 
     def can_load_this_weight(self, weight):
         return bool(
-            self.drone and self.drone.weight_limit > 0 and weight > 0 and
-            self.drone.weight_limit <= self.get_total_weight() + weight
+            self.drone and self.drone.weight_limit >= 0 and weight >= 0 and
+            self.drone.weight_limit >= self.get_total_weight() + weight
+        )
+
+    def can_load_this_weight_list(self, weight_list):
+        weight = sum(i for i in weight_list)
+        return bool(
+            self.drone and self.drone.weight_limit >= 0 and weight >= 0 and
+            self.drone.weight_limit >= self.get_total_weight() + weight
         )
 
     def get_med_list(self):
