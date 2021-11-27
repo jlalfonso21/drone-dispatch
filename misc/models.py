@@ -1,6 +1,8 @@
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
+from api.errors import WeightError
+
 DRONE_MODELS = (
     ('lightweight', 'Lightweight'),
     ('middleweight', 'Middleweight'),
@@ -40,6 +42,21 @@ class Drone(models.Model):
     def __str__(self):
         return self.serial_number
 
+    def add_med(self, med, qty):
+        if not self.cargo:
+            cargo = Cargo.objects.create(drone=self)
+        else:
+            cargo = self.cargo
+        cargo.add(med, qty)
+
+    def remove_med(self, med, qty):
+        if self.cargo:
+            self.cargo.remove(med, qty)
+
+    def clean_cargo(self):
+        self.cargo.drone = None
+        self.cargo.save()
+
 
 class Medication(models.Model):
     name = models.CharField(max_length=255,
@@ -66,3 +83,59 @@ class Medication(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CargoItem(models.Model):
+    cargo = models.ForeignKey(to="misc.Cargo", on_delete=models.SET_NULL, null=True, related_name="items")
+    med = models.ForeignKey(to="misc.Medication", on_delete=models.SET_NULL, null=True)
+    qty = models.PositiveIntegerField(default=0)
+
+    def weight(self):
+        if not self.med:
+            return 0
+        return self.med.weight * self.qty
+
+
+class Cargo(models.Model):
+    drone = models.OneToOneField(to="misc.Drone", related_name="cargo", on_delete=models.SET_NULL, null=True)
+
+    def get_total_weight(self):
+        return sum([i.weight for i in self.items.all()])
+
+    def can_load_this_weight(self, weight):
+        return bool(
+            self.drone and self.drone.weight_limit > 0 and weight > 0 and
+            self.drone.weight_limit <= self.get_total_weight() + weight
+        )
+
+    def get_med_list(self):
+        return [i.med for i in self.items.all()]
+
+    def add(self, med, qty):
+        items = self.items.all()
+        meds = self.get_med_list()
+        if not self.can_load_this_weight(med.weight * qty):
+            raise WeightError("Can't load this weight.")
+        if med in meds:
+            for i in items:
+                if i.med == med:
+                    i.qty += qty
+                    i.save()
+        else:
+            CargoItem.objects.create(cargo=self, med=med, qty=qty)
+
+    def remove(self, med, qty):
+        items = self.items.all()
+        meds = self.get_med_list()
+        if med in meds:
+            for i in items:
+                if i.med == med:
+                    saved = False
+                    if i.qty - qty >= 0:
+                        i.qty -= qty
+                        saved = True
+                    if i.qty == 0:
+                        i.delete()
+                    else:
+                        i.save() if saved else None
+                    return
