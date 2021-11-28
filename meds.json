@@ -1,0 +1,42 @@
+[
+  {
+    "model": "misc.medication",
+    "pk": 1,
+    "fields": {
+      "name": "DIPIRONE-500MG",
+      "weight": 120.0,
+      "code": "DIP_500_MG",
+      "image": ""
+    }
+  },
+  {
+    "model": "misc.medication",
+    "pk": 2,
+    "fields": {
+      "name": "Aspirin-500-mg",
+      "weight": 60.0,
+      "code": "ASA_500_MG",
+      "image": ""
+    }
+  },
+  {
+    "model": "misc.medication",
+    "pk": 3,
+    "fields": {
+      "name": "Med-123",
+      "weight": 25.0,
+      "code": "M_0123456789",
+      "image": ""
+    }
+  },
+  {
+    "model": "misc.medication",
+    "pk": 4,
+    "fields": {
+      "name": "PainKiller-1ml",
+      "weight": 225.0,
+      "code": "PNKLLR_1_ML",
+      "image": ""
+    }
+  }
+]
