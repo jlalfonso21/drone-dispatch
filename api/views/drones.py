@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from api.errors import MedicationNotFoundError, WeightError
 from api.serializers.drones import DroneBaseSerializer, DroneCreateSerializer, DroneSerialNumberSerializer, \
-    DroneCargoSerializer
+    DroneCargoSerializer, CargoItemSerializer
 from api.serializers.medications import MedicationLoadSerializer
 from misc.models import Drone, Medication
 
@@ -25,6 +25,15 @@ class DroneAvailableList(ListAPIView):
 class DronesViewSet(viewsets.ModelViewSet):
     queryset = Drone.objects.all()
     serializer_class = DroneSerialNumberSerializer
+
+    @action(detail=False, methods=['get'])
+    def loaded_meds(self, request, serial_number=None):
+        obj: Drone = self.queryset.filter(serial_number=serial_number).first()
+        if obj is None:
+            return Response(data={"detail": "not found"}, status=status.HTTP_404_NOT_FOUND)
+        cargo = obj.get_or_create_cargo()
+        data = CargoItemSerializer(cargo.items.all(), many=True).data
+        return Response(data=data)
 
     @action(detail=False, methods=['get'])
     def battery_level(self, request, serial_number=None):
