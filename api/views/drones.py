@@ -90,3 +90,11 @@ class DronesViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
         data = DroneCargoSerializer(obj).data
         return Response(data=data)
+
+    @action(detail=False, methods=['post'])
+    def clean_cargo(self, request, serial_number=None):
+        obj: Drone = self.queryset.filter(serial_number=serial_number).first()
+        if obj is None:
+            return Response(data={"detail": "not found"}, status=status.HTTP_404_NOT_FOUND)
+        obj.clean_cargo()
+        return Response()

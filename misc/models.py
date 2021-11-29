@@ -87,8 +87,7 @@ class Drone(models.Model):
             self.cargo.remove(med, qty)
 
     def clean_cargo(self):
-        self.cargo.drone = None
-        self.cargo.save()
+        self.cargo.clean_drone()
 
 
 class Medication(models.Model):
@@ -131,6 +130,10 @@ class CargoItem(models.Model):
 
 class Cargo(models.Model):
     drone = models.OneToOneField(to="misc.Drone", related_name="cargo", on_delete=models.SET_NULL, null=True)
+
+    def clean_drone(self):
+        self.drone = None
+        self.save()
 
     def get_total_weight(self):
         return sum([i.weight() for i in self.items.all()])

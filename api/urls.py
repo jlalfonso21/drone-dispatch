@@ -14,5 +14,7 @@ urlpatterns = [
          name='drone_battery_level'),
     path('drones/load/<str:serial_number>/', DronesViewSet.as_view({'post': 'load_drone'}),
          name='drone_load'),
+    path('drones/clean/<str:serial_number>/', DronesViewSet.as_view({'post': 'clean_cargo'}),
+         name='drone_clean'),
     path('drones/available/', DroneAvailableList.as_view()),
 ]
