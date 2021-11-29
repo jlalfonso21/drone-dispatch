@@ -4,3 +4,7 @@ class WeightError(Exception):
 
 class MedicationNotFoundError(Exception):
     pass
+
+
+class BatteryLevelError(Exception):
+    pass

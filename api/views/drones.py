@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
 
-from api.errors import MedicationNotFoundError, WeightError
+from api.errors import MedicationNotFoundError, WeightError, BatteryLevelError
 from api.serializers.drones import DroneBaseSerializer, DroneCreateSerializer, DroneSerialNumberSerializer, \
     DroneCargoSerializer, CargoItemSerializer
 from api.serializers.medications import MedicationLoadSerializer
@@ -84,9 +84,12 @@ class DronesViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
         try:
             for item in meds_to_add:
-                cargo.add(item[0], item[1])
+                obj.add_med(item[0], item[1])
         except WeightError:
             return Response(data={"weight_exceed": "the cargo weight exceeds drone weight limit"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        except BatteryLevelError:
+            return Response(data={"battery_low": "the drone cannot be in loading state since its battery level is low"},
                             status=status.HTTP_400_BAD_REQUEST)
         data = DroneCargoSerializer(obj).data
         return Response(data=data)

@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 
-from api.errors import WeightError
+from api.errors import WeightError, BatteryLevelError
 
 DRONE_MODELS = (
     ('lightweight', 'Lightweight'),
@@ -47,14 +47,14 @@ class Drone(models.Model):
         self.save()
 
     def set_loading_state(self):
-        if self.state == "IDLE":
-            self.state = "LOADING"
-            self.save()
+        if self.battery_capacity < 25:
+            raise BatteryLevelError()
+        self.state = "LOADING"
+        self.save()
 
     def set_loaded_state(self):
-        if self.state == "LOADING":
-            self.state = "LOADED"
-            self.save()
+        self.state = "LOADED"
+        self.save()
 
     def set_delivering_state(self):
         self.state = "DELIVERING"
@@ -80,6 +80,8 @@ class Drone(models.Model):
             cargo = Cargo.objects.create(drone=self)
         else:
             cargo = self.cargo
+        if self.state != "LOADING":
+            self.set_loading_state()
         cargo.add(med, qty)
 
     def remove_med(self, med, qty):
@@ -88,6 +90,7 @@ class Drone(models.Model):
 
     def clean_cargo(self):
         self.cargo.clean_drone()
+        self.set_idle_state()
 
 
 class Medication(models.Model):
