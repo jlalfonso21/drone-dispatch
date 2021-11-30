@@ -3,40 +3,60 @@
     "model": "misc.medication",
     "pk": 1,
     "fields": {
-      "name": "DIPIRONE-500MG",
-      "weight": 120.0,
-      "code": "DIP_500_MG",
-      "image": ""
+      "name": "medication_01_500mg",
+      "weight": 12.5,
+      "code": "MEDICATION_01_500_MG",
+      "image": "images/medications/med1.jpeg"
     }
   },
   {
     "model": "misc.medication",
     "pk": 2,
     "fields": {
-      "name": "Aspirin-500-mg",
-      "weight": 60.0,
-      "code": "ASA_500_MG",
-      "image": ""
+      "name": "painkiller-50g",
+      "weight": 50.9,
+      "code": "PNKLLR_50_G",
+      "image": "images/medications/med2.jpeg"
     }
   },
   {
     "model": "misc.medication",
     "pk": 3,
     "fields": {
-      "name": "Med-123",
-      "weight": 25.0,
-      "code": "M_0123456789",
-      "image": ""
+      "name": "medication-03-300mg",
+      "weight": 0.5,
+      "code": "MED_03_300_MG",
+      "image": "images/medications/med3.jpeg"
     }
   },
   {
     "model": "misc.medication",
     "pk": 4,
     "fields": {
-      "name": "PainKiller-1ml",
-      "weight": 225.0,
-      "code": "PNKLLR_1_ML",
-      "image": ""
+      "name": "aspirin-300mg-100-pills",
+      "weight": 45.0,
+      "code": "ASA_300_MG_100_P",
+      "image": "images/medications/med4.jpeg"
+    }
+  },
+  {
+    "model": "misc.medication",
+    "pk": 5,
+    "fields": {
+      "name": "Medication-05-100mg",
+      "weight": 22.0,
+      "code": "MED_05_100_MG",
+      "image": "images/medications/med5.jpeg"
+    }
+  },
+  {
+    "model": "misc.medication",
+    "pk": 6,
+    "fields": {
+      "name": "Medication-06-300mg",
+      "weight": 22.0,
+      "code": "MED_06_300_MG",
+      "image": "images/medications/med6.jpeg"
     }
   }
 ]

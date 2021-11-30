@@ -3,7 +3,7 @@
     "model": "misc.drone",
     "pk": 1,
     "fields": {
-      "serial_number": "asd-asd-s",
+      "serial_number": "drone-000001",
       "model": "heavyweight",
       "weight_limit": 500.0,
       "battery_capacity": 24.0,
@@ -14,9 +14,9 @@
     "model": "misc.drone",
     "pk": 2,
     "fields": {
-      "serial_number": "asd",
+      "serial_number": "drone-000002",
       "model": "middleweight",
-      "weight_limit": 123.0,
+      "weight_limit": 300.0,
       "battery_capacity": 100.0,
       "state": "IDLE"
     }
@@ -25,9 +25,9 @@
     "model": "misc.drone",
     "pk": 3,
     "fields": {
-      "serial_number": "1asd",
-      "model": "middleweight",
-      "weight_limit": 123.0,
+      "serial_number": "drone-000003",
+      "model": "lightweight",
+      "weight_limit": 124.5,
       "battery_capacity": 100.0,
       "state": "IDLE"
     }
@@ -36,9 +36,75 @@
     "model": "misc.drone",
     "pk": 4,
     "fields": {
-      "serial_number": "SERIAL-10923902",
+      "serial_number": "drone-000004",
       "model": "cruiserweight",
-      "weight_limit": 450.0,
+      "weight_limit": 400.0,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 5,
+    "fields": {
+      "serial_number": "drone-000005",
+      "model": "lightweight",
+      "weight_limit": 130.0,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 6,
+    "fields": {
+      "serial_number": "drone-000006",
+      "model": "cruiserweight",
+      "weight_limit": 350.8,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 7,
+    "fields": {
+      "serial_number": "drone-000007",
+      "model": "heavyweight",
+      "weight_limit": 450.8,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 8,
+    "fields": {
+      "serial_number": "drone-000008",
+      "model": "heavyweight",
+      "weight_limit": 499.9,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 9,
+    "fields": {
+      "serial_number": "drone-000009",
+      "model": "heavyweight",
+      "weight_limit": 500.0,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 10,
+    "fields": {
+      "serial_number": "drone-000010",
+      "model": "heavyweight",
+      "weight_limit": 475.0,
       "battery_capacity": 100.0,
       "state": "IDLE"
     }
