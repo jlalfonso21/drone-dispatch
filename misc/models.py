@@ -2,6 +2,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, RegexVa
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from simple_history.models import HistoricalRecords
 
 from api.errors import WeightError, BatteryLevelError
 from misc.tasks import log_drone_state
@@ -41,6 +42,8 @@ class Drone(models.Model):
     battery_capacity = models.FloatField(default=100.0, validators=[MinValueValidator(0), MaxValueValidator(100), ])
 
     state = models.CharField(max_length=20, choices=DRONE_STATES, default='IDLE')
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.serial_number

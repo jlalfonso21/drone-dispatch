@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from api.errors import MedicationNotFoundError, WeightError, BatteryLevelError
 from api.serializers.drones import DroneBaseSerializer, DroneCreateSerializer, DroneSerialNumberSerializer, \
-    DroneCargoSerializer, CargoItemSerializer
+    DroneCargoSerializer, CargoItemSerializer, HistoricalRecordField
 from api.serializers.medications import MedicationLoadSerializer
 from misc.models import Drone, Medication
 
@@ -101,3 +101,19 @@ class DronesViewSet(viewsets.ModelViewSet):
             return Response(data={"detail": "not found"}, status=status.HTTP_404_NOT_FOUND)
         obj.clean_cargo()
         return Response()
+
+    @action(detail=False, methods=['get'])
+    def audit(self, request, serial_number=None):
+        obj: Drone = self.queryset.filter(serial_number=serial_number).first()
+        if obj is None:
+            return Response(data={"detail": "not found"}, status=status.HTTP_404_NOT_FOUND)
+        srz = HistoricalRecordField()
+        data = srz.to_representation(data=obj.history.all())
+
+        # remove unnecesary data
+        for d in data:
+            del d['id']
+            del d['history_id']
+            del d['history_change_reason']
+            del d['history_type']
+        return Response(data=data)

@@ -59,3 +59,10 @@ class DroneSerialNumberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drone
         fields = ("serial_number",)
+
+
+class HistoricalRecordField(serializers.ListField):
+    child = serializers.DictField()
+
+    def to_representation(self, data):
+        return super().to_representation(data.values())
