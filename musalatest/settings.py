@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'misc',
     # Extra apps
     'rest_framework',
+    'background_task',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,46 @@
+[
+  {
+    "model": "misc.drone",
+    "pk": 1,
+    "fields": {
+      "serial_number": "asd-asd-s",
+      "model": "heavyweight",
+      "weight_limit": 500.0,
+      "battery_capacity": 24.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 2,
+    "fields": {
+      "serial_number": "asd",
+      "model": "middleweight",
+      "weight_limit": 123.0,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 3,
+    "fields": {
+      "serial_number": "1asd",
+      "model": "middleweight",
+      "weight_limit": 123.0,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  },
+  {
+    "model": "misc.drone",
+    "pk": 4,
+    "fields": {
+      "serial_number": "SERIAL-10923902",
+      "model": "cruiserweight",
+      "weight_limit": 450.0,
+      "battery_capacity": 100.0,
+      "state": "IDLE"
+    }
+  }
+]

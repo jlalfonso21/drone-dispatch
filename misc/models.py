@@ -1,7 +1,10 @@
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from api.errors import WeightError, BatteryLevelError
+from misc.tasks import log_drone_state
 
 DRONE_MODELS = (
     ('lightweight', 'Lightweight'),
@@ -91,6 +94,12 @@ class Drone(models.Model):
     def clean_cargo(self):
         self.cargo.clean_drone()
         self.set_idle_state()
+
+
+@receiver(post_save, sender=Drone)
+def schedule_verification_check(sender, instance: Drone, created, *args, **kwargs):
+    if created:
+        log_drone_state(instance.id, repeat=10)
 
 
 class Medication(models.Model):
