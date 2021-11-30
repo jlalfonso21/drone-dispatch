@@ -20,6 +20,6 @@ def log_drone_state(drone_id):
     from misc.models import Drone
     try:
         drone = Drone.objects.get(pk=drone_id)
-        logger.info(f"SERIAL_NUMBER: {drone.serial_number}, BATERRY_LEVEL: {drone.battery_capacity}")
+        logger.info(f"SERIAL_NUMBER: {drone.serial_number} - BATERRY_LEVEL: {drone.battery_capacity}")
     except:
         pass
